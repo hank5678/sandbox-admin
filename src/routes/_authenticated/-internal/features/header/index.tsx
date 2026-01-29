@@ -4,6 +4,7 @@ import { Avatar, Button, Dropdown, Layout, type MenuProps, Modal, Typography } f
 import { useAuthLogout } from "../../hooks/use-auth-logout"
 import { Timer } from "./timer"
 
+import { Logo } from "@/components/ui/logo"
 import { SITE_NAME } from "@/constants"
 import { useAuthStore } from "@/hooks/use-auth-store"
 
@@ -41,6 +42,7 @@ const Header = () => {
   return (
     <ANTDHeader className="bg-gray-1/60 border-gray-1 fixed top-0 left-0 z-10 flex h-16 w-full items-center justify-between border-b px-6 shadow-md backdrop-blur-xs">
       <div className="flex items-center">
+        <Logo className="mr-3 w-10" />
         <Typography.Title level={4} className="mb-0">
           <span>{SITE_NAME}</span>
         </Typography.Title>
