@@ -5,11 +5,14 @@ import { useAuthLogout } from "../../hooks/use-auth-logout"
 import { Timer } from "./timer"
 
 import { SITE_NAME } from "@/constant"
+import { useAuthStore } from "@/hooks/use-auth-store"
 
 const { Header: ANTDHeader } = Layout
 
 const Header = () => {
+  const session = useAuthStore((state) => state.session)
   const authLogoutMutation = useAuthLogout()
+  const userEmail = session?.user.email ?? ""
   const dropdownMenuItems: MenuProps["items"] = [
     {
       key: "change-password",
@@ -51,7 +54,7 @@ const Header = () => {
           <Dropdown menu={{ items: dropdownMenuItems }} placement="bottomLeft">
             <Button type="text" className="py-2">
               <Avatar size={24} icon={<UserOutlined />} />
-              <span>使用者</span>
+              <span>{userEmail}</span>
             </Button>
           </Dropdown>
         </div>

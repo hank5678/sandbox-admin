@@ -1,15 +1,12 @@
 import { createFileRoute, redirect } from "@tanstack/react-router"
 
-import supabase from "@/lib/supabase"
+import { useAuthStore } from "@/hooks/use-auth-store"
 
 export const Route = createFileRoute("/_authenticated")({
   beforeLoad: async () => {
-    const {
-      data: { session },
-      error
-    } = await supabase.auth.getSession()
+    const session = await useAuthStore.getState().checkAuth()
 
-    if (error || !session) {
+    if (!session) {
       throw redirect({
         to: "/"
       })
