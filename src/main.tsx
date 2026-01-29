@@ -7,7 +7,7 @@ import { GlobalErrorBoundary } from "@/components/boundarys/global-error-boundar
 import { ANTDProvider } from "@/components/providers/antd-provider"
 import { QueryProvider } from "@/components/providers/query-provider"
 import { RouterProvider } from "@/components/providers/router-provider"
-import "@/lib/zod"
+import "@/libs/initialize"
 
 const rootElement = document.getElementById("root")!
 if (!rootElement.innerHTML) {

@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 
 import { useToast } from "@/hooks/use-toast"
-import { router } from "@/lib/router"
+import { router } from "@/libs/router"
 import { authLogout } from "@/services/auth/logout"
 
 const GOODBYE_MESSAGES = [

@@ -1,4 +1,4 @@
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 export interface CreateProductParams {
   name: string

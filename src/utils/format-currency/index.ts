@@ -16,16 +16,11 @@ function formatNumber(amount: number, thousandSeparator: string, decimalSeparato
   const formatted = decimalAmount.toFixed(precision)
 
   const parts = formatted.split(".")
-  // 處理千分位
   parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, thousandSeparator)
 
-  // 如果 precision 為 0，不需要組合小數部分
   return parts.length > 1 ? parts.join(decimalSeparator) : parts[0]
 }
 
-/**
- * 貨幣配置：直接定義該貨幣的顯示習慣
- */
 const CURRENCY_CONFIG: Record<Currency, { symbol: string; divider: number; precision: number; thousandSeparator: string; decimalSeparator: string }> = {
   TWD: { symbol: "NT$ ", divider: 1, precision: 0, thousandSeparator: ",", decimalSeparator: "." },
   IDR: { symbol: "Rp ", divider: 1, precision: 0, thousandSeparator: ".", decimalSeparator: "," },
@@ -33,14 +28,9 @@ const CURRENCY_CONFIG: Record<Currency, { symbol: string; divider: number; preci
   VND: { symbol: "₫ ", divider: 1, precision: 0, thousandSeparator: ".", decimalSeparator: "," }
 }
 
-/**
- * 格式化貨幣數值 (以 Currency 決定格式)
- */
 function formatCurrency(amount: number | string = 0, options?: FormatCurrencyOptions): string {
   const numValue = Number(amount)
 
-  // 安全檢查：處理 null, undefined, NaN 或 業務邏輯中的 0
-  // 如果你希望 0 顯示 "NT$ 0" 而不是 "-"，請改為 if (amount === "" || amount == null || isNaN(numValue))
   if (!numValue && numValue !== 0) {
     return "-"
   }

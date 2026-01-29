@@ -10,8 +10,10 @@ const supabase = createClient(SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY, {
   }
 })
 
-supabase.auth.onAuthStateChange((_event, session) => {
-  useAuthStore.setState({ session, isInitialized: true })
-})
+const initialize = () => {
+  supabase.auth.onAuthStateChange((_event, session) => {
+    useAuthStore.setState({ session, isInitialized: true })
+  })
+}
 
-export default supabase
+export { supabase, initialize }

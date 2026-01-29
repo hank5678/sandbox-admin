@@ -3,7 +3,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router"
 import Background from "./-lib/features/background"
 import { LoginForm } from "./-lib/features/login-form"
 
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 export const Route = createFileRoute("/")({
   component: RouteComponent,

@@ -1,4 +1,4 @@
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 /**
  * 更新參數（所有字段除 key 外都可選）

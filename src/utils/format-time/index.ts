@@ -1,13 +1,5 @@
 import dayjs from "dayjs"
-import "dayjs/locale/zh-tw"
-import timezone from "dayjs/plugin/timezone"
-import utc from "dayjs/plugin/utc"
 
-dayjs.extend(utc)
-dayjs.extend(timezone)
-dayjs.locale("zh-tw")
-
-// 擴充類型，加入 RELATIVE_CHAT
 export type FormatTimeType = "YEAR_MONTH_DAY" | "YEAR_TO_SECOND" | "MONTH_DAY" | "MONTH_TO_SECOND" | "HOUR_MINUTE_SECOND" | "HOUR_MINUTE" | "RELATIVE"
 
 export interface FormatTimeOptions {
@@ -55,9 +47,7 @@ const FORMATS: Record<Exclude<FormatTimeType, "RELATIVE">, string> = {
 /** 判斷是否為毫秒時間戳 (西元 5138 年之前適用) */
 const isMillisecond = (timestamp: number): boolean => Math.abs(timestamp) > TIMESTAMP_UNIT_THRESHOLD
 
-/** 處理相對時間邏輯 */
 const getRelativeTime = (date: dayjs.Dayjs, timezone?: string): string => {
-  // 如果指定了時區，需要獲取該時區的當前日期
   const now = timezone ? dayjs().tz(timezone).startOf("day") : dayjs().startOf("day")
   const msgDay = date.startOf("day")
   const diffDays = now.diff(msgDay, "day")
@@ -81,11 +71,6 @@ const getRelativeTime = (date: dayjs.Dayjs, timezone?: string): string => {
  * @param options.type 時間格式類型 (預設: "YEAR_TO_SECOND")
  * @param options.timezone 時區代碼，支援 IANA 格式或 UTC offset 格式
  * @returns 格式化後的日期字串
- * @example
- * formatTime(1769322605000) // "2026/01/25 14:30:05" (使用系統時區)
- * formatTime(1769322605000, { timezone: "Asia/Taipei" }) // "2026/01/25 14:30:05"
- * formatTime(1769322605000, { timezone: "+0800" }) // "2026/01/25 14:30:05"
- * formatTime(1769322605000, { type: "HOUR_MINUTE", timezone: "UTC" }) // "06:30"
  */
 function formatTime(value?: number | string | null, { type = "YEAR_TO_SECOND", timezone }: FormatTimeOptions = {}): string {
   const numValue = Number(value)
@@ -101,10 +86,8 @@ function formatTime(value?: number | string | null, { type = "YEAR_TO_SECOND", t
   if (!date.isValid()) return INVALID_TIME_OUTPUT
 
   if (type === "RELATIVE") {
-    // 分流：處理相對時間
     return getRelativeTime(date, timezone)
   } else {
-    // 處理一般映射格式
     return date.format(FORMATS[type])
   }
 }

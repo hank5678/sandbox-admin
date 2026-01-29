@@ -1,6 +1,6 @@
 import { type LoginRequest, loginResponseSchema } from "./types"
 
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 export const authLogin = async (params: LoginRequest) => {
   const { data, error } = await supabase.auth.signInWithPassword({

@@ -1,7 +1,7 @@
 import { type Session } from "@supabase/supabase-js"
 import { create } from "zustand"
 
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 interface AuthState {
   session: Session | null

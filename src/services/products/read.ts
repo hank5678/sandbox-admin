@@ -2,7 +2,7 @@ import * as z from "zod"
 
 import { productSchema } from "./types"
 
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 export interface ReadProductParams {
   pagination: {

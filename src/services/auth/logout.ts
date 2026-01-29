@@ -1,4 +1,4 @@
-import supabase from "@/lib/supabase"
+import { supabase } from "@/libs/supabase"
 
 export const authLogout = async (): Promise<void> => {
   try {
