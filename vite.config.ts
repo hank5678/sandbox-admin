@@ -22,5 +22,8 @@ export default defineConfig({
   test: {
     environment: "jsdom",
     globals: true
+  },
+  define: {
+    __APP_BUILD_TIME__: new Date().getTime()
   }
 })

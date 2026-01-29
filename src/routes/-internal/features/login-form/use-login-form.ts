@@ -1,32 +1,38 @@
 import { Form } from "antd"
+import { useCallback } from "react"
 
 import { useAuthLogin } from "../../hooks/use-auth-login"
 import { type LoginFormValues, loginFormSchema } from "./schema"
+
+import { DEMO_EMAIL, DEMO_PASSWORD } from "@/constants"
 
 export const useLoginForm = () => {
   const [form] = Form.useForm<LoginFormValues>()
   const mutation = useAuthLogin()
 
-  const handleFinish = (values: LoginFormValues) => {
-    const parsed = loginFormSchema.parse(values)
+  const handleFinish = useCallback(
+    (values: LoginFormValues) => {
+      const parsed = loginFormSchema.parse(values)
 
-    mutation.mutate({
-      identifier: parsed.email,
-      password: parsed.password
-    })
-  }
+      mutation.mutate({
+        identifier: parsed.email,
+        password: parsed.password
+      })
+    },
+    [mutation]
+  )
 
-  const fillDemoAccount = (email: string, password: string) => {
+  const setDemoFieldValues = useCallback(() => {
     form.setFieldsValue({
-      email,
-      password
+      email: DEMO_EMAIL,
+      password: DEMO_PASSWORD
     })
-  }
+  }, [form])
 
   return {
     form,
     isLoading: mutation.isPending,
     handleFinish,
-    fillDemoAccount
+    setDemoFieldValues
   }
 }
