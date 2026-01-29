@@ -3,6 +3,28 @@ import * as z from "zod"
 import { productSchema } from "./types"
 
 import { supabase } from "@/libs/supabase"
+import { getPaginationRange } from "@/utils/get-pagination-range"
+
+const mapIfExists = <K, V>(map: Map<K, V>, value: K | undefined): V | K | undefined => {
+  return value && map.has(value) ? map.get(value) : value
+}
+
+const DEFAULT_SORT_FIELD = "createdAt"
+const DEFAULT_ASCENDING = false
+
+const TYPE_MAP = new Map([["all", undefined]])
+const RARITY_MAP = new Map([["all", undefined]])
+const TRADEABLE_MAP = new Map([
+  ["all", undefined],
+  ["yes", "yes"],
+  ["no", "no"]
+])
+
+const FIELD_NAME_MAP = new Map([["createdTime", "createdAt"]])
+const ORDER_MAP = new Map([
+  ["ascend", true],
+  ["descend", false]
+])
 
 export interface ReadProductParams {
   pagination: {
@@ -23,79 +45,64 @@ export interface ReadProductParams {
   }
 }
 
-export const readResponseSchema = z.object({
+const schema = z.object({
   data: z.array(productSchema),
   count: z.number()
 })
 
-export type ReadResponse = z.infer<typeof readResponseSchema>
+export type ReadResponse = z.infer<typeof schema>
 
-const transformParams = (params: ReadProductParams): ReadProductParams => {
-  const transformed = { ...params }
+const transformParams = (params: ReadProductParams) => {
+  const { filters, sorter, pagination } = params
+  const [from, to] = getPaginationRange(pagination.page, pagination.size)
 
-  if (transformed.filters) {
-    const filters = { ...transformed.filters }
-
-    if (filters.type === "all") {
-      filters.type = undefined
-    }
-    if (filters.rarity === "all") {
-      filters.rarity = undefined
-    }
-
-    if (filters.isTradeable && filters.isTradeable !== "all") {
-      filters.isTradeable = filters.isTradeable === "yes" ? "yes" : "no"
-    } else if (filters.isTradeable === "all") {
-      filters.isTradeable = undefined
-    }
-
-    transformed.filters = filters
+  return {
+    range: [from, to] as const,
+    filters: filters
+      ? {
+          ...filters,
+          type: mapIfExists(TYPE_MAP, filters.type),
+          rarity: mapIfExists(RARITY_MAP, filters.rarity),
+          isTradeable: mapIfExists(TRADEABLE_MAP, filters.isTradeable)
+        }
+      : undefined,
+    sorter: sorter
+      ? {
+          field: mapIfExists(FIELD_NAME_MAP, sorter.field) as string,
+          order: mapIfExists(ORDER_MAP, sorter.order) as boolean
+        }
+      : undefined
   }
-
-  // 轉換排序欄位名稱
-  if (transformed.sorter) {
-    const sorter = { ...transformed.sorter }
-    sorter.field = sorter.field === "createdTime" ? "createdAt" : sorter.field
-    transformed.sorter = sorter
-  }
-
-  return transformed
 }
 
-export const readProducts = async (params?: ReadProductParams): Promise<ReadResponse> => {
-  const transformedParams = params ? transformParams(params) : undefined
-
-  const { page, size } = transformedParams?.pagination ?? { page: 1, size: 10 }
-
-  const from = (page - 1) * size
-  const to = from + size - 1
+export const readProducts = async (params: ReadProductParams) => {
+  const { range, filters, sorter } = transformParams(params)
+  const [from, to] = range
 
   const query = supabase.from("products").select("*", { count: "exact" }).range(from, to)
 
-  if (transformedParams?.filters) {
-    const { filters } = transformedParams
-    if (filters.name) query.ilike("name", `%${filters.name}%`)
-    if (filters.type) query.eq("type", filters.type)
-    if (filters.rarity) query.eq("rarity", filters.rarity)
-    if (filters.isTradeable) query.eq("isTradeable", filters.isTradeable)
-    if (filters.levelRequirement) {
-      query.gte("levelRequirement", filters.levelRequirement[0])
-      query.lte("levelRequirement", filters.levelRequirement[1])
+  if (filters) {
+    const { name, type, rarity, isTradeable, levelRequirement, price } = filters
+    if (name) query.ilike("name", `%${name}%`)
+    if (type) query.eq("type", type)
+    if (rarity) query.eq("rarity", rarity)
+    if (isTradeable) query.eq("isTradeable", isTradeable)
+    if (levelRequirement) {
+      query.gte("levelRequirement", levelRequirement[0])
+      query.lte("levelRequirement", levelRequirement[1])
     }
-    if (filters.price) query.eq("price", filters.price)
+    if (price) query.eq("price", price)
   }
 
-  if (params?.sorter) {
-    const { sorter } = params
-    const isAsc = sorter.order === "ascend"
-    query.order(sorter.field, { ascending: isAsc })
+  if (sorter) {
+    query.order(sorter.field, { ascending: sorter.order })
   } else {
-    query.order("createdAt", { ascending: false })
+    query.order(DEFAULT_SORT_FIELD, { ascending: DEFAULT_ASCENDING })
   }
 
   const { data, error, count } = await query
 
   if (error) throw error
 
-  return readResponseSchema.parse({ data, count })
+  return schema.parse({ data, count: count ?? 0 })
 }
