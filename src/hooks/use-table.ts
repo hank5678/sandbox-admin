@@ -1,7 +1,7 @@
 import type { TableProps } from "antd"
 import { useState } from "react"
 
-import { DEFAULT_PAGE_SIZE } from "@/constant"
+import { DEFAULT_PAGE_SIZE } from "@/constants"
 
 export interface Pagination {
   current: number

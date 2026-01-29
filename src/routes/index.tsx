@@ -1,7 +1,7 @@
 import { createFileRoute, redirect } from "@tanstack/react-router"
 
-import Background from "./-lib/features/background"
-import { LoginForm } from "./-lib/features/login-form"
+import Background from "./-internal/features/background"
+import { LoginForm } from "./-internal/features/login-form"
 
 import { supabase } from "@/libs/supabase"
 

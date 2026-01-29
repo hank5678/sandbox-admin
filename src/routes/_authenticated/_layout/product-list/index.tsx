@@ -2,15 +2,15 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Card } from "antd"
 import { useState } from "react"
 
-import { ProductEditModal } from "./-lib/features/product-edit-modal"
-import { ProductsFilter } from "./-lib/features/products-filter"
-import { FILTER_INITIAL_VALUES } from "./-lib/features/products-filter/constants"
-import type { FormValues } from "./-lib/features/products-filter/schema"
-import { ProductsTable } from "./-lib/features/products-table"
-import { useProductsQuery } from "./-lib/hooks/use-products-query"
-import type { Product } from "./-lib/shared/types"
+import { ProductEditModal } from "./-internal/features/product-edit-modal"
+import { ProductsFilter } from "./-internal/features/products-filter"
+import { FILTER_INITIAL_VALUES } from "./-internal/features/products-filter/constants"
+import type { FormValues } from "./-internal/features/products-filter/schema"
+import { ProductsTable } from "./-internal/features/products-table"
+import { useProductsQuery } from "./-internal/hooks/use-products-query"
+import type { Product } from "./-internal/shared/types"
 
-import { DEFAULT_PAGE_SIZE } from "@/constant"
+import { DEFAULT_PAGE_SIZE } from "@/constants"
 import { useTable } from "@/hooks/use-table"
 
 export const Route = createFileRoute("/_authenticated/_layout/product-list/")({

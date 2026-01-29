@@ -1,9 +1,9 @@
 import { Outlet, createFileRoute } from "@tanstack/react-router"
 import { Layout } from "antd"
 
-import { Breadcrumb } from "./-lib/features/breadcrumb"
-import { Header } from "./-lib/features/header"
-import { Navigation } from "./-lib/features/navigation"
+import { Breadcrumb } from "./-internal/features/breadcrumb"
+import { Header } from "./-internal/features/header"
+import { Navigation } from "./-internal/features/navigation"
 
 import { OutletErrorBoundary } from "@/components/boundarys/outlet-error-boundary"
 

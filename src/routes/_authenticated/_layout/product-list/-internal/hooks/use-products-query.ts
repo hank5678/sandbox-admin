@@ -2,7 +2,7 @@ import { keepPreviousData, useQuery } from "@tanstack/react-query"
 
 import { QUERY_KEY } from "../utils/query-helper"
 
-import { type ReadProductParams, readProducts } from "@/services/products/read"
+import { type ReadProductParams, readProducts } from "@/services/product/read"
 
 const useProductsQuery = (params?: ReadProductParams) => {
   return useQuery({

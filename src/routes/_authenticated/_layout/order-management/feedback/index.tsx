@@ -1,11 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Avatar, Card, Empty, Space } from "antd"
 
-import { MessageComposer } from "./-lib/features/message-composer"
-import { MessageList } from "./-lib/features/message-list"
-import { RoomList } from "./-lib/features/room-list"
-import { useMessageSend } from "./-lib/hooks/use-message-send"
-import { useRoomList } from "./-lib/hooks/use-room-list"
+import { MessageComposer } from "./-internal/features/message-composer"
+import { MessageList } from "./-internal/features/message-list"
+import { RoomList } from "./-internal/features/room-list"
+import { useMessageSend } from "./-internal/hooks/use-message-send"
+import { useRoomList } from "./-internal/hooks/use-room-list"
 
 import { classNames } from "@/utils/class-names"
 

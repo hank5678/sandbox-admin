@@ -3,7 +3,7 @@ import { Button, Card, Form, Input, Modal, Typography } from "antd"
 
 import { useLoginForm } from "./use-login-form"
 
-import { DEMO_EMAIL, DEMO_PASSWORD, DESCRIPTION, SITE_NAME } from "@/constant"
+import { DEMO_EMAIL, DEMO_PASSWORD, DESCRIPTION, SITE_NAME } from "@/constants"
 import { useToggle } from "@/hooks/use-toggle"
 
 const { Title, Text } = Typography

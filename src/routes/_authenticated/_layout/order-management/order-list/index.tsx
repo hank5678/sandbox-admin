@@ -2,11 +2,11 @@ import { createFileRoute } from "@tanstack/react-router"
 import { Card, DatePicker, FloatButton, Form, Grid, Input, Select } from "antd"
 import { useState } from "react"
 
-import { OrderCard } from "./-lib/components/order-card"
-import { Statistic } from "./-lib/components/statistic"
-import { type FormValues, INIT_VALUES, schema } from "./-lib/constants"
-import { VirtualizedGrid } from "./-lib/features/virtualized-grid"
-import { useOrders } from "./-lib/hooks/use-orders"
+import { OrderCard } from "./-internal/components/order-card"
+import { Statistic } from "./-internal/components/statistic"
+import { type FormValues, INIT_VALUES, schema } from "./-internal/constants"
+import { VirtualizedGrid } from "./-internal/features/virtualized-grid"
+import { useOrders } from "./-internal/hooks/use-orders"
 
 import { FilterForm } from "@/components/ui/filter-form"
 

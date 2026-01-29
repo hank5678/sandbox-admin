@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { queryHelper } from "../utils/query-helper"
 
 import { useToast } from "@/hooks/use-toast"
-import { createProduct } from "@/services/products/create"
+import { createProduct } from "@/services/product/create"
 
 const useCreateProduct = () => {
   const queryClient = useQueryClient()

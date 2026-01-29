@@ -3,8 +3,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { queryHelper } from "../utils/query-helper"
 
 import { useToast } from "@/hooks/use-toast"
-import type { ReadResponse } from "@/services/products/read"
-import { type UpdateProductParams, updateProduct } from "@/services/products/update"
+import type { ReadResponse } from "@/services/product/read"
+import { type UpdateProductParams, updateProduct } from "@/services/product/update"
 
 const useUpdateProduct = () => {
   const { successMessage } = useToast()

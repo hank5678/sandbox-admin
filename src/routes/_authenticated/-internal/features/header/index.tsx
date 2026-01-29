@@ -4,7 +4,7 @@ import { Avatar, Button, Dropdown, Layout, type MenuProps, Modal, Typography } f
 import { useAuthLogout } from "../../hooks/use-auth-logout"
 import { Timer } from "./timer"
 
-import { SITE_NAME } from "@/constant"
+import { SITE_NAME } from "@/constants"
 import { useAuthStore } from "@/hooks/use-auth-store"
 
 const { Header: ANTDHeader } = Layout

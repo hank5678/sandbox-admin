@@ -1,12 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router"
 import { Col, Row } from "antd"
 
-import { OperationalMetrics } from "./-lib/components/operational-metrics"
-import { OrderVisitorComparison } from "./-lib/components/order-visitor-comparison"
-import { OverallStatistics } from "./-lib/components/overall-statistics"
-import { ProductTypeDistribution } from "./-lib/components/product-type-distribution"
-import { SalesTrends } from "./-lib/components/sales-trends"
-import { TopSellingProducts } from "./-lib/components/top-selling-products"
+import { OperationalMetrics } from "./-internal/components/operational-metrics"
+import { OrderVisitorComparison } from "./-internal/components/order-visitor-comparison"
+import { OverallStatistics } from "./-internal/components/overall-statistics"
+import { ProductTypeDistribution } from "./-internal/components/product-type-distribution"
+import { SalesTrends } from "./-internal/components/sales-trends"
+import { TopSellingProducts } from "./-internal/components/top-selling-products"
 
 export const Route = createFileRoute("/_authenticated/_layout/dashboard/")({
   component: RouteComponent
