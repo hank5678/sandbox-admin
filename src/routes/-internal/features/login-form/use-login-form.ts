@@ -5,10 +5,12 @@ import { useAuthLogin } from "../../hooks/use-auth-login"
 import { type LoginFormValues, loginFormSchema } from "./schema"
 
 import { DEMO_EMAIL, DEMO_PASSWORD } from "@/constants"
+import { useToast } from "@/hooks/use-toast"
 
 export const useLoginForm = () => {
   const [form] = Form.useForm<LoginFormValues>()
   const mutation = useAuthLogin()
+  const { message } = useToast()
 
   const handleFinish = useCallback(
     (values: LoginFormValues) => {
@@ -27,7 +29,8 @@ export const useLoginForm = () => {
       email: DEMO_EMAIL,
       password: DEMO_PASSWORD
     })
-  }, [form])
+    message.success("已填入測試帳號，請點擊登入按鈕")
+  }, [form, message])
 
   return {
     form,
