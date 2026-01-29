@@ -6,9 +6,9 @@ import { type PropsWithChildren } from "react"
 const ANTDProvider = ({ children }: PropsWithChildren) => {
   return (
     <StyleProvider layer>
-      <App>
-        <ConfigProvider locale={zhTW}>{children}</ConfigProvider>
-      </App>
+      <ConfigProvider locale={zhTW}>
+        <App>{children}</App>
+      </ConfigProvider>
     </StyleProvider>
   )
 }
